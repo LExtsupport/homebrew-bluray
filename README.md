@@ -39,7 +39,6 @@ See [VALIDATION.md](VALIDATION.md) for the test details.
 
 ```sh
 brew install LExtsupport/bluray/libaacs
-brew test LExtsupport/bluray/libaacs
 ```
 
 Homebrew automatically adds this tap for the fully qualified install command.
@@ -52,7 +51,6 @@ Close applications using libaacs, then run these commands in order:
 brew tap LExtsupport/bluray
 brew uninstall libaacs
 brew install LExtsupport/bluray/libaacs
-brew test LExtsupport/bluray/libaacs
 ```
 
 Homebrew handles cleanup of unused dependencies and installs the dependencies
@@ -88,8 +86,6 @@ Homebrew version.
 This initial recipe builds from source. On the test M2 Ultra, libaacs built in
 **14 seconds**. Building and testing its libgcrypt dependency added **1 minute
 55 seconds**; downloads, other dependencies, and machine speed affect the total.
-The separate `brew test` command may also install Homebrew's own testing tools
-on its first run.
 
 Prebuilt Homebrew bottles are a future packaging step. They would avoid
 compiling libaacs on supported Macs; dependencies also need compatible bottles
