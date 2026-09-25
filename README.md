@@ -23,7 +23,7 @@ upgrades, and broader disc/application workflows still need validation.
 
 The formula applies its complete source patch inline and regenerates the
 Autotools build scripts using current build tools. See
-[VALIDATION.md](VALIDATION.md) for the checks completed so far.
+[the speed test](VALIDATION.md) for measurements.
 
 ## Measured speed improvement
 
