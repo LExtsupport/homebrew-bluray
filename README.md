@@ -48,10 +48,8 @@ for duplicate names and dependency limitations.
 
 ## Scope
 
-This package changes the native crypto backend. It does not acquire or
-distribute disc keys, alter MakeMKV, implement a key cache, or add a decryption
-fallback to an application. Windows and Linux installation routes are outside
-the scope of this tap.
+This package only enables hardware acceleration to the native crypto backend. It does not acquire or
+distribute disc keys. 
 
 ## Sources and licensing
 
