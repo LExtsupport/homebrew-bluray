@@ -16,17 +16,18 @@ are preserved, so applications using those paths need no discovery changes:
 ## Status
 
 Initial source recipe, pinned to the tested libaacs 0.11.1 release. There are
-no prebuilt bottles. This is not yet a qualified replacement for every Mac
-or disc configuration. Intel Macs, additional macOS versions, migration from
-Homebrew core, upgrades, and application workflows still need validation.
+no prebuilt bottles. Installation, replacement of Homebrew core's libaacs,
+rollback, and the application's existing library paths have been tested on
+an Apple M2 Ultra running macOS 14. Intel Macs, additional macOS versions,
+upgrades, and broader disc/application workflows still need validation.
 
 The formula applies its complete source patch inline and regenerates the
 Autotools build scripts using current build tools. See
 [VALIDATION.md](VALIDATION.md) for the checks completed so far.
 
-## Installation for evaluation
+## Installation
 
-On a Mac without an existing Homebrew libaacs installation:
+### If libaacs is not installed
 
 ```sh
 brew install LExtsupport/bluray/libaacs
@@ -34,14 +35,59 @@ brew test LExtsupport/bluray/libaacs
 ```
 
 Homebrew automatically adds this tap for the fully qualified install command.
-The package uses the same name as Homebrew core's libaacs; the two packages
-cannot be installed side by side. Migration instructions will be added after
-replacement and restoration have been tested. Adding the tap alone does not
-replace an existing library:
+
+### If standard Homebrew libaacs is already installed
+
+Close applications using libaacs, then run these commands in order:
 
 ```sh
 brew tap LExtsupport/bluray
+HOMEBREW_NO_AUTOREMOVE=1 brew uninstall homebrew/core/libaacs
+brew install LExtsupport/bluray/libaacs
+brew test LExtsupport/bluray/libaacs
 ```
+
+The environment setting keeps Homebrew from removing the crypto dependencies
+between uninstalling the old package and installing the new one. Homebrew may
+still update dependencies during installation.
+
+Restart your application afterward. The library name and standard Homebrew
+paths stay the same; no application path changes are needed. Adding the tap
+alone does not replace an existing library.
+
+If Homebrew refuses to uninstall because another installed formula requires
+libaacs, keep the standard package and resolve that dependency first. Do not
+force the uninstall. Homebrew core dependencies can require the core provider;
+this replacement was tested with no installed Homebrew dependents.
+
+### Switch back to standard Homebrew libaacs
+
+Close applications using libaacs, then run:
+
+```sh
+HOMEBREW_NO_AUTOREMOVE=1 brew uninstall LExtsupport/bluray/libaacs
+brew untap LExtsupport/bluray
+brew install homebrew/core/libaacs
+```
+
+Restart your application. This installs the current standard Homebrew release,
+which may be newer than the version you previously had. The tested rollback
+installed core libaacs 0.12.0 successfully. Remove the tap before reinstalling
+core to avoid a duplicate-formula trust error observed with the tested
+Homebrew version.
+
+### Build time
+
+This initial recipe builds from source. On the test M2 Ultra, libaacs built in
+**14 seconds**. Building and testing its libgcrypt dependency added **1 minute
+55 seconds**; downloads, other dependencies, and machine speed affect the total.
+The separate `brew test` command may also install Homebrew's own testing tools
+on its first run.
+
+Prebuilt Homebrew bottles are a future packaging step. They would avoid
+compiling libaacs on supported Macs; dependencies also need compatible bottles
+or an existing installation to avoid their own source builds. A formula inside
+a tap is the package type used here. A cask is not needed for prebuilt bottles.
 
 See Homebrew's [tap documentation](https://docs.brew.sh/Taps#duplicate-names)
 for duplicate names and dependency limitations.
