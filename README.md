@@ -50,7 +50,7 @@ Close applications using libaacs, then run these commands in order:
 
 ```sh
 brew tap LExtsupport/bluray
-brew uninstall homebrew/core/libaacs
+brew uninstall libaacs
 brew install LExtsupport/bluray/libaacs
 brew test LExtsupport/bluray/libaacs
 ```
@@ -72,9 +72,9 @@ this replacement was tested with no installed Homebrew dependents.
 Close applications using libaacs, then run:
 
 ```sh
-brew uninstall LExtsupport/bluray/libaacs
+brew uninstall libaacs
 brew untap LExtsupport/bluray
-brew install homebrew/core/libaacs
+brew install libaacs
 ```
 
 Restart your application. This installs the current standard Homebrew release,
