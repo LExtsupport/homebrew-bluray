@@ -34,9 +34,10 @@ failure. No app source, binary, or library search paths were changed.
 Homebrew's build timings were 14 seconds for libaacs and 1 minute 55 seconds for
 libgcrypt. Dependency installation updated Automake to 1.19, Libtool to 2.6.2,
 and libgcrypt to 1.12.4, and reinstalled libgpg-error 1.61. The original uninstall
-automatically removed unused crypto dependencies. The README now uses
-`HOMEBREW_NO_AUTOREMOVE=1` when switching providers to preserve dependencies
-between package removal and installation.
+automatically removed unused crypto dependencies, which installation restored.
+Later rollback tests temporarily preserved dependencies. At the owner's
+request, the published instructions now use plain `brew uninstall` commands
+and Homebrew's normal cleanup of unused dependencies.
 
 Rollback to current core libaacs 0.12.0 succeeded. Its public API decrypted the
 same sample correctly at 50.208 ms. Finally, the original core 0.11.1 package

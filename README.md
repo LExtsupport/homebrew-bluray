@@ -25,6 +25,14 @@ The formula applies its complete source patch inline and regenerates the
 Autotools build scripts using current build tools. See
 [VALIDATION.md](VALIDATION.md) for the checks completed so far.
 
+## Measured speed improvement
+
+Native decryption was **about 20× faster** than the tested standard Homebrew
+build on an Apple M2 Ultra: the same 18 MiB sample took **2.55 ms instead of
+50.54 ms**, with matching decrypted output. This measures decryption only;
+overall extraction speed also depends on drive speed and other processing.
+See [VALIDATION.md](VALIDATION.md) for the test details.
+
 ## Installation
 
 ### If libaacs is not installed
@@ -42,14 +50,13 @@ Close applications using libaacs, then run these commands in order:
 
 ```sh
 brew tap LExtsupport/bluray
-HOMEBREW_NO_AUTOREMOVE=1 brew uninstall homebrew/core/libaacs
+brew uninstall homebrew/core/libaacs
 brew install LExtsupport/bluray/libaacs
 brew test LExtsupport/bluray/libaacs
 ```
 
-The environment setting keeps Homebrew from removing the crypto dependencies
-between uninstalling the old package and installing the new one. Homebrew may
-still update dependencies during installation.
+Homebrew handles cleanup of unused dependencies and installs the dependencies
+needed by the replacement package.
 
 Restart your application afterward. The library name and standard Homebrew
 paths stay the same; no application path changes are needed. Adding the tap
@@ -65,7 +72,7 @@ this replacement was tested with no installed Homebrew dependents.
 Close applications using libaacs, then run:
 
 ```sh
-HOMEBREW_NO_AUTOREMOVE=1 brew uninstall LExtsupport/bluray/libaacs
+brew uninstall LExtsupport/bluray/libaacs
 brew untap LExtsupport/bluray
 brew install homebrew/core/libaacs
 ```
